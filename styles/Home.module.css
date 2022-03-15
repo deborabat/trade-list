@@ -8,8 +8,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  
 }
 
 .footer {
@@ -57,20 +56,54 @@
 }
 
 .code {
-  background: #fafafa;
+  display: flex;
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
+  justify-content: flex-end;
+  align-items: flex-end;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.formSearch form {
+  display: flex;
+  justify-content: center;
+}
+
+.code input {
+  margin-bottom: 40px;
+  height: 40px;
+  width: 250px;
+  border: 0;
+  background-color: #434343;
+  border-radius: 15px;
+  padding: 0 20px;
+  font-size: 16px;
+  outline: 0;
+}
+
+.code button {
+  height: 40px;
+  border-radius: 15px;
+  background-color: #ffff;
+  font-weight: bold;
+  color: #434343;
+  padding: 0 10px;
+  margin: 10px;
+  border: 0;
+}
+
+.code button:hover {
+  opacity: 0.5;
 }
 
 .grid {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  flex-wrap:wrap;
+  max-width: '100%';
 }
 
 .card {
@@ -82,7 +115,7 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+  max-width: '100%';
 }
 
 .card:hover,
