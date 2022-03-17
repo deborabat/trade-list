@@ -1,12 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { FormEvent, useEffect, useState } from "react";
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import { useRouter } from "next/router";
-import Pagination from "../components/Pagination";
+import { firestore } from '../firebase/clientApp';
+
+import {collection,QueryDocumentSnapshot,DocumentData,query,where,limit,getDocs} from "@firebase/firestore";
+
+const tradeCollection = collection(firestore,'trade');
+
+
+const [todos,setTodos] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
+const [loading,setLoading] = useState<boolean>(true);
 
 //declaração de tipos das propriedades que o component Home espera receber
 interface IPropsComponent {
@@ -25,6 +32,29 @@ const [search, setSearch] = useState(searchParam);
 // Inicizaliação do state que armazena o valor da propriedade searchParam
 const [result, setResult] = useState<undefined | string>(undefined);
 
+const getTodos = async () => {
+  // construct a query to get up to 10 undone todos 
+  const todosQuery = query(tradeCollection,where('done','==',false),limit(10));
+  // get the todos
+  const querySnapshot = await getDocs(todosQuery);
+  
+  // map through todos adding them to an array
+  const result: QueryDocumentSnapshot<DocumentData>[] = [];
+  querySnapshot.forEach((snapshot) => {
+  result.push(snapshot);
+  });
+  // set it to state
+  setTodos(result);
+};
+
+useEffect( () => {
+  // get the todos
+  getTodos();
+  // reset loading
+  setTimeout( () => {
+    setLoading(false);
+  },2000)
+},[]);
 
   return (
     <div className={styles.container}>
